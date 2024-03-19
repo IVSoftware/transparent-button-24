@@ -36,7 +36,7 @@ namespace transparent_button
                     }
                 }
             }
-            var buttonRestart = new TransparentButton
+            var buttonRestart = new Button
             {
                 Size = new Size(200,80),
                 Text = "Restart",
@@ -61,6 +61,19 @@ namespace transparent_button
             };
             Controls.Add(buttonRestart);
             Controls.SetChildIndex(buttonRestart, 0);
+
+            buttonRestart.BackColor = Color.LimeGreen;
+            Bitmap bitmap = new Bitmap(buttonRestart.ClientRectangle.Width, buttonRestart.ClientRectangle.Height);
+            buttonRestart.DrawToBitmap(bitmap, buttonRestart.ClientRectangle);
+            Region region = new Region(buttonRestart.ClientRectangle);
+            for (int x = 0; x < buttonRestart.Width; x++) for (int y = 0; y < buttonRestart.Height; y++)
+                {
+                    if (bitmap.GetPixel(x, y).ToArgb() == Color.LimeGreen.ToArgb())
+                    {
+                        region.Exclude(new Rectangle(x, y, 1, 1));
+                    }
+                }
+            buttonRestart.Region = region;
         }
         private void Any_Clicked(object? sender, EventArgs e)
         {
@@ -69,56 +82,6 @@ namespace transparent_button
         {
             base.OnLoad(e);
             await Task.Delay(TimeSpan.FromSeconds(2.5));
-        }
-    }
-    class TransparentButton : Button
-    {
-        protected override void OnPaint(PaintEventArgs pevent)
-        {
-            base.OnPaint(pevent);
-            if (!DesignMode)
-            {
-                // Detect size/location changes
-                if ((PointToScreen(Location) != _prevLocation) || (Size != _prevSize))
-                {
-                    bool isInitial = false;
-                    if ((BackgroundImage == null) || !BackgroundImage.Size.Equals(Size))
-                    {
-                        isInitial = true;
-                        BackgroundImage = new Bitmap(Width, Height);
-                    }
-                    if (MouseButtons.Equals(MouseButtons.None))
-                    {
-                        // Hide button, take screenshot, show button again
-                        Visible = false;
-                        BeginInvoke(async () =>
-                        {
-                            Parent?.Refresh();
-                            if (isInitial) await Task.Delay(250);
-                            using (var graphics = Graphics.FromImage(BackgroundImage))
-                            {
-                                graphics.CopyFromScreen(PointToScreen(new Point()), new Point(), Size);
-                            }
-                            Visible = true;
-                        });
-                    }
-                    else
-                    {
-                        using (var graphics = Graphics.FromImage(BackgroundImage))
-                            graphics.FillRectangle(Brushes.LightGray, graphics.ClipBounds);
-                    }
-                }
-                _prevLocation = PointToScreen(Location);
-                _prevSize = Size;
-            }
-        }
-
-        Point _prevLocation = new Point(int.MaxValue, int.MaxValue);
-        Size _prevSize = new Size(int.MaxValue, int.MaxValue);
-        protected override void OnMouseUp(MouseEventArgs mevent)
-        {
-            base.OnMouseUp(mevent);
-            Refresh();
         }
     }
 }
