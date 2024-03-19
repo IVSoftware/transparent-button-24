@@ -4,7 +4,7 @@ namespace transparent_button
 {
     public partial class MainForm : Form
     {
-        Random _rando = new Random(1);
+        Random _rando = new Random(12);
         public MainForm()
         {
             InitializeComponent();
@@ -12,7 +12,7 @@ namespace transparent_button
             {
                 for (int col = 0; col < tableLayoutPanel.ColumnCount; col++)
                 {
-                    var number = _rando.Next(1, 65);
+                    var number = Convert.ToInt32(Math.Pow(2, _rando.Next(1, 9)));
                     var button = new Button
                     {
                         Name = $"button_{col}_{row}",
@@ -28,7 +28,7 @@ namespace transparent_button
                     {
                         Color startColor = Color.FromArgb(0x8E, 0xC6, 0x3F);
                         Color endColor = Color.FromArgb(0x01, 0xAC, 0xC6);
-                        float scale = (float)(number - 1) / 64;
+                        float scale = (float)(number - 1) / 256;
                         int r = (int)(startColor.R + (endColor.R - startColor.R) * scale);
                         int g = (int)(startColor.G + (endColor.G - startColor.G) * scale);
                         int b = (int)(startColor.B + (endColor.B - startColor.B) * scale);
