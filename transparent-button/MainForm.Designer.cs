@@ -28,33 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tableLayoutPanel = new TableLayoutPanel();
+            button = new Button();
             SuspendLayout();
             // 
-            // tableLayoutPanel
+            // button
             // 
-            tableLayoutPanel.ColumnCount = 4;
-            tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel.Dock = DockStyle.Fill;
-            tableLayoutPanel.Location = new Point(10, 10);
-            tableLayoutPanel.Name = "tableLayoutPanel";
-            tableLayoutPanel.RowCount = 4;
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel.Size = new Size(458, 424);
-            tableLayoutPanel.TabIndex = 0;
+            button.Location = new Point(149, 156);
+            button.Name = "button";
+            button.Size = new Size(112, 108);
+            button.TabIndex = 0;
+            button.Text = "Button";
+            button.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(12F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(478, 444);
-            Controls.Add(tableLayoutPanel);
+            Controls.Add(button);
             Font = new Font("Segoe UI", 11F);
             Margin = new Padding(4);
             Name = "MainForm";
@@ -66,6 +57,6 @@
 
         #endregion
 
-        private TableLayoutPanel tableLayoutPanel;
+        private Button button;
     }
 }
